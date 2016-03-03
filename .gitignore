@@ -1,2 +1,4 @@
 sakai/tomcat
 sakai/local.properties
+/.DS_Store
+/.project

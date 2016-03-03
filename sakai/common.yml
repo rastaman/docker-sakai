@@ -44,3 +44,10 @@ db:
   # We expose the port so that clients outside docker can connect
   ports:
    - "127.0.0.1:3306:3306"
+
+odb:
+  image: yoanyo/oracle-xe-11g
+  # We expose oracle application express port and sqlnet port
+  ports:
+   - "9090:8080"
+   - "127.0.0.1:1521:1521"
