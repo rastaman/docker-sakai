@@ -63,6 +63,45 @@ docker-compose restart app
 If you wish to test out config changes they should go in `sakai/local.properties` but
 if you wish to include them in general builds they should get put in `sakai/placeholder.properties`
 
+Oracle Development
+==================
+
+You must deploy the oracle driver first, follow the instructions to configure maven [here](https://jira.sakaiproject.org/browse/KNL-1411)
+
+And then type:
+```
+cd sakai/checkout/kernel/deploy
+mvn install sakai:deploy -Poracle -Dmaven.tomcat.home=/home/user/sakai/docker/sakai/tomcat
+```
+
+Once it's deployed bring up the application and supporting services:
+```
+cd oracle
+docker build -t yoanyo/oracle-xe-11g .
+```
+
+This will build an image of oracle database.
+
+```
+cd sakai
+docker-compose -f oracle.yml up
+```
+
+This will startup a copy of Oracle and Tomcat (running Sakai). They will be configured to
+use each other, to stop them all just ^C. 
+Oracle takes about a minute to startup so the first time you do this probably tomcat will show you this error:
+ORA-01033: ORACLE initialization or shutdown in progress
+Just restart the tomcat typing:
+```
+docker-compose -f oracle.yml stop app
+docker-compose -f oracle.yml start app
+```
+
+In general use you will probably want to start them up in the background:
+```
+docker-compose -f oracle.yml up -d
+```
+
 
 Production
 ==========
