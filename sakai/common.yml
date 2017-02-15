@@ -22,7 +22,7 @@ app:
 # have docker pick random ports and so change all these lines to be just a single
 # port number.
   ports:
-   - "8080:8080"
+   - "127.0.0.1:8080:8080"
    - "127.0.0.1:8000:8000"
    - "127.0.0.1:8009:8009"
    - "127.0.0.1:5400:5400"
