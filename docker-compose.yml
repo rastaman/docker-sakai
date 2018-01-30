@@ -1,0 +1,41 @@
+version: '3'
+services:
+  sakai:
+    image: tomcat:8.5.24-jre8
+    ports:
+      - "8080:8080"
+      - "8025"
+    volumes:
+      # Sakai folders and files
+      - ./sakai/bin:/usr/local/sakai/bin
+      - ./sakai/conf:/usr/local/sakai/conf
+      - ./sakai/tomcat/components:/usr/local/sakai/components
+      - ./sakai/tomcat/lib:/usr/local/sakai/lib
+      - ./sakai/tomcat/webapps:/usr/local/sakai/webapps
+      - ./sakai/sakai:/usr/local/sakai/sakai
+      - ./sakai/tomcat/endorsed:/usr/local/tomcat/endorsed
+    environment:
+      - CATALINA_OPTS_EXTRA=-Dsakai.demo=true
+      - CATALINA_BASE=/usr/local/sakai
+    depends_on:
+      - oracle
+
+  mysql:
+    image: mysql:5.6.27
+    environment:
+      - MYSQL_ROOT_PASSWORD= 
+      - MYSQL_ALLOW_EMPTY_PASSWORD="yes"
+      - MYSQL_USER=sakai
+      - MYSQL_PASSWORD=sakai
+      - MYSQL_DATABASE=sakai
+    command:
+      - --character-set-server=utf8
+    ports:
+      - "3306"
+
+  oracle:
+    image: sath89/oracle-xe-11g
+    volumes:
+      - ./sakai/db:/docker-entrypoint-initdb.d
+    ports:
+      - "1521"

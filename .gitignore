@@ -1,3 +1,7 @@
+sakai/conf/Catalina
 sakai/tomcat
 sakai/local.properties
+sakai/db/.cache
+sakai/sakai/samigo
 /.project
+.DS_Store
