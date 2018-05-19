@@ -1,7 +1,7 @@
 version: '3'
 services:
   sakai:
-    image: tomcat:8.5.24-jre8
+    image: tomcat:8.5-jre8-slim
     ports:
       - "8080:8080"
       - "8025"
@@ -18,10 +18,10 @@ services:
       - CATALINA_OPTS_EXTRA=-Dsakai.demo=true
       - CATALINA_BASE=/usr/local/sakai
     depends_on:
-      - oracle
+      - mysql
 
   mysql:
-    image: mysql:5.6.27
+    image: mysql:5.6
     environment:
       - MYSQL_ROOT_PASSWORD= 
       - MYSQL_ALLOW_EMPTY_PASSWORD="yes"
